@@ -1,6 +1,6 @@
 <div align="center">
 
-# 📝 NeoGlass Summarizer & Paraphraser
+# 📝 TextAI Summarizer & Paraphraser
 
 <p>
     <a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-3.8%2B-blue" alt="Python"></a>
@@ -11,11 +11,11 @@
 </p>
 
 <p>
-    <strong>NeoGlass</strong> is a sleek, glassmorphic web application leveraging <strong>state-of-the-art AI models</strong> for high-quality text summarization and paraphrasing. Built with <strong>Streamlit</strong>, it combines <strong>Hugging Face summarization models</strong> and <strong>Groq LLaMA 3.1</strong> paraphrasing to provide an interactive, modern UI for text processing.
+    <strong>TextAI</strong> is a sleek, glassmorphic web application leveraging <strong>state-of-the-art AI models</strong> for high-quality text summarization and paraphrasing. Built with <strong>Streamlit</strong>, it combines <strong>Hugging Face summarization models</strong> and <strong>Groq LLaMA 3.1</strong> paraphrasing to provide an interactive, modern UI for text processing.
 </p>
 
 <p>
-    🌐 <strong>Try it online:</strong> <a href="https://share.streamlit.io/your-username/neoglass-summarizer/main/app.py">Launch NeoGlass(Dummy)</a>
+    🌐 <strong>Try it online:</strong> <a href="https://text-ai-rk.vercel.app/">Launch TextAI</a>
 </p>
 
 </div>
@@ -36,26 +36,6 @@
 
 </div>
 
-## 📂 File Structure
-<pre>
-mvps/
-│
-├── 📂 mvp/                    # Core application modules
-│   ├── __init__.py            # Package initializer
-│   ├── abstractive.py         # Abstractive summarization
-│   ├── extractive.py          # Extractive summarization
-│   ├── mvp_pipeline.py        # Main processing pipeline
-│   ├── paraphraser.py         # Paraphrasing module
-│   └── test_run.py            # Test running pipeline
-│
-├── .env                       # Environment variables for API keys
-├── .gitignore                # Git ignore file
-├── app.py                    # Main app script
-├── config.yaml               # Main YAML configuration
-├── pyproject.toml           # Project configuration for Python
-└── README.md                # Project README
-</pre>
-
 ## ⚙️ Setup & Installation
 
 ### Prerequisites
@@ -65,8 +45,7 @@ mvps/
 
 ### Clone Repository
 ```bash
-git clone https://github.com/RITHIKKUMARAN/Infosys_Data_Preprocessing.git
-cd mvps
+git clone https://github.com/RITHIKKUMARAN/TextAI.git
 ```
 
 ### Setup Virtual Environment
@@ -90,21 +69,19 @@ pip install -r requirements.txt
 
 ### Create a .env file in the root directory:
 ```env
-HF_API_KEY="your_hugging_face_api_key_here"
-GROQ_API_KEY="your_groq_api_key_here"
+VITE_HF_API_KEY=your_huggingface_api_key_here
+
+VITE_GROQ_API_KEY=your_groq_api_key_here
 ```
 
 ## 🚀 Running the Application
 ```bash
-streamlit run app.py
-```
-Open your browser at: http://localhost:8501
+npm install
 
-## 🧪 Running Tests
-```bash
-python test_run.py
+npm run dev
+
 ```
-This validates all backend modules and prints results in the console.
+Open your browser at: http://localhost:5173
 
 ## 🤝 Contributing
 
@@ -127,6 +104,6 @@ git push origin feature/AmazingFeature
 
 ## 📄 License
 
-Licensed under Apache-2.0. See [LICENSE](https://github.com/RITHIKKUMARAN/Infosys_Data_Preprocessing/blob/main/LICENSE)
+Licensed under Apache-2.0. See [LICENSE](https://github.com/RITHIKKUMARAN/TextAI/blob/main/LICENSE)
 
 Built with ❤️ and modern AI.
