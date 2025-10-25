@@ -1,0 +1,10 @@
+# Python dependencies for the mvps/ MVP scripts
+# These scripts use the Hugging Face REST inference endpoint and GROQ REST API via requests.
+requests>=2.28.0
+PyYAML>=6.0
+python-dotenv>=1.0.0
+
+# Optional / helpful tools for development
+# black for formatting, pytest for tests
+black>=24.3.0
+pytest>=8.0.0
