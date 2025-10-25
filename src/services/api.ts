@@ -13,12 +13,10 @@ if (!GROQ_API_KEY) {
 
 import type { 
   SummarizationOptions, 
-  ParaphraseOptions,
-  HuggingFaceResponse,
-  GroqResponse 
+  ParaphraseOptions
 } from '../types/api';
 
-export const summarizeText = async ({ text, length = 'medium', model = 'bart' }: SummarizationOptions) => {
+export const summarizeText = async ({ text, length = 'medium', model = 'bart' }: SummarizationOptions): Promise<string> => {
   if (!HF_API_KEY) {
     throw new Error('Hugging Face API key is not configured');
   }
@@ -46,69 +44,63 @@ export const summarizeText = async ({ text, length = 'medium', model = 'bart' }:
   const params = lengthMap[length];
 
   try {
-    try {
-      console.log('Making request to Hugging Face API:', {
-        model: modelConfig.name,
-        params,
-        textLength: text.length
-      });
+    console.log('Making request to Hugging Face API:', {
+      model: modelConfig.name,
+      params,
+      textLength: text.length
+    });
 
-      const response = await fetch(
-        `https://api-inference.huggingface.co/models/${modelConfig.name}`,
-        {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${HF_API_KEY}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            inputs: text,
-            parameters: {
-              ...params,
-              do_sample: true,
-              temperature: 0.7,
-              top_p: 0.9
-            }
-          }),
-        }
-      );
+    const response = await fetch(
+      `https://api-inference.huggingface.co/models/${modelConfig.name}`,
+      {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${HF_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          inputs: text,
+          parameters: {
+            ...params,
+            do_sample: true,
+            temperature: 0.7,
+            top_p: 0.9
+          }
+        }),
+      }
+    );
 
-      if (response.status === 503) {
-        throw new Error('Model is loading. Please try again in a few moments.');
-      }
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('API Error Response:', errorText);
-        throw new Error(`API Error: ${response.status} - ${errorText}`);
-      }
-
-      const result = await response.json();
-      console.log('HF API Response:', result);
-      
-      if (Array.isArray(result) && result.length > 0 && typeof result[0] === 'object') {
-        if ('summary_text' in result[0]) {
-          return result[0].summary_text;
-        } else if ('generated_text' in result[0]) {
-          return result[0].generated_text;
-        }
-      }
-      
-      console.error('Unexpected API response format:', result);
-      throw new Error('Unexpected API response format. Please try again.');
-    } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
-      throw new Error('An unexpected error occurred during summarization');
+    if (response.status === 503) {
+      throw new Error('Model is loading. Please try again in a few moments.');
     }
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('API Error Response:', errorText);
+      throw new Error(`API Error: ${response.status} - ${errorText}`);
+    }
+
+    const result = await response.json();
+    console.log('HF API Response:', result);
+    
+    if (Array.isArray(result) && result.length > 0 && typeof result[0] === 'object') {
+      if ('summary_text' in result[0]) {
+        return result[0].summary_text;
+      } else if ('generated_text' in result[0]) {
+        return result[0].generated_text;
+      }
+    }
+    
+    console.error('Unexpected API response format:', result);
+    throw new Error('Unexpected API response format. Please try again.');
   } catch (error) {
     console.error('Summarization error:', error);
-    throw error;
+    if (error instanceof Error) throw error;
+    throw new Error('An unexpected error occurred during summarization');
   }
 };
 
-export const paraphraseText = async ({ text, numSequences = 3 }: ParaphraseOptions) => {
+export const paraphraseText = async ({ text, numSequences = 3 }: ParaphraseOptions): Promise<string[]> => {
   try {
     const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
@@ -138,21 +130,21 @@ export const paraphraseText = async ({ text, numSequences = 3 }: ParaphraseOptio
     }
 
     const data = await response.json();
-    
+
     if (!data.choices?.[0]?.message?.content) {
       console.error('Unexpected API response:', data);
       throw new Error('Unexpected API response format');
     }
-    
-    const text_response = data.choices[0].message.content;
-    
+
+    const text_response: string = data.choices[0].message.content;
+
     // Split into distinct paraphrases, clean and filter them
     const lines = text_response
       .split("\n")
-      .map(line => line.trim())
-      .filter(line => line && !line.match(/^[0-9]+[\.)]/)) // Remove numbered lines
-      .map(line => line.replace(/^[•*\-]\s*/, '').replace(/"/g, '')) // Clean bullets and quotes
-      .filter(line => line && line.split(' ').length > 2); // Ensure meaningful content
+      .map((line: string) => line.trim())
+      .filter((line: string) => line && !line.match(/^[0-9]+[.)]/)) // Remove numbered lines like "1." or "1)"
+      .map((line: string) => line.replace(/^[•*-]\s*/, '').replace(/"/g, '')) // Clean bullets and quotes
+      .filter((line: string) => line && line.split(' ').length > 2); // Ensure meaningful content
 
     if (lines.length === 0) {
       throw new Error('No valid paraphrases generated');

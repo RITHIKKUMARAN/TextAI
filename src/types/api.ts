@@ -14,7 +14,7 @@ export interface GroqResponse {
 export interface SummarizationOptions {
   text: string;
   length?: 'short' | 'medium' | 'long';
-  model?: 'bart' | 't5' | 'pegasus';
+  model?: 'bart' | 'pegasus';
 }
 
 export interface ParaphraseOptions {

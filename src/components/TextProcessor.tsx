@@ -30,7 +30,7 @@ export default function TextProcessor() {
   const [result, setResult] = useState<ProcessedResult>({});
   const [mode, setMode] = useState<'summarize' | 'paraphrase'>('summarize');
   const [summaryLength, setSummaryLength] = useState<'short' | 'medium' | 'long'>('medium');
-  const [selectedModel, setSelectedModel] = useState<'bart' | 't5' | 'pegasus'>('bart');
+  const [selectedModel, setSelectedModel] = useState<'bart' | 'pegasus'>('bart');
 
   const handleProcess = async () => {
     if (!inputText.trim()) {
@@ -53,8 +53,12 @@ export default function TextProcessor() {
         const paraphrases = await paraphraseText({ text: inputText });
         setResult({ paraphrases });
       }
-    } catch (error: any) {
-      setResult({ error: error.message || 'An error occurred while processing your text. Please try again.' });
+    } catch (error) {
+      if (error instanceof Error) {
+        setResult({ error: error.message });
+      } else {
+        setResult({ error: String(error) });
+      }
     } finally {
       setIsProcessing(false);
     }
@@ -104,7 +108,7 @@ export default function TextProcessor() {
                 ))}
               </div>
               <div className="flex gap-4 justify-center">
-                {(['bart', 't5', 'pegasus'] as const).map((model) => (
+                {(['bart', 'pegasus'] as const).map((model) => (
                   <AnimatedButton
                     key={model}
                     onClick={() => setSelectedModel(model)}
