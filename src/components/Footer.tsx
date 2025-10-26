@@ -23,10 +23,10 @@ export const Footer = () => {
   };
 
   const socialLinks = [
-    { icon: Twitter, label: 'Twitter', href: '#' },
-    { icon: Github, label: 'GitHub', href: '#' },
-    { icon: Linkedin, label: 'LinkedIn', href: '#' },
-    { icon: Mail, label: 'Email', href: '#' },
+    { icon: Twitter, label: 'Twitter', href: 'https://x.com' },
+    { icon: Github, label: 'GitHub', href: 'https://github.com/RITHIKKUMARAN' },
+    { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/rithikkumarank' },
+    { icon: Mail, label: 'Email', href: 'rithikkumarank@gmail.com' },
   ];
 
   return (
