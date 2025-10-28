@@ -54,7 +54,7 @@ export const Hero = () => {
             >
               <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
               <span className="text-sm font-medium text-gray-300">
-                Powered by Advanced Neural Networks
+                Developed By Rithik Kumaran K
               </span>
             </motion.div>
           </motion.div>
