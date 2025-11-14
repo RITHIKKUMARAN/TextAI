@@ -11,7 +11,7 @@
 </p>
 
 <p>
-    <strong>TextAI</strong> is a sleek, glassmorphic web application leveraging <strong>state-of-the-art AI models</strong> for high-quality text summarization and paraphrasing. Built with <strong>Streamlit</strong>, it combines <strong>Hugging Face summarization models</strong> and <strong>Groq LLaMA 3.1</strong> paraphrasing to provide an interactive, modern UI for text processing.
+    <strong>TextAI</strong> is a sleek, glassmorphic web application leveraging <strong>state-of-the-art AI models</strong> for high-quality text summarization and paraphrasing. Built with <strong>React and JS</strong>, it combines <strong>Hugging Face summarization models</strong> and <strong>Groq LLaMA 3.1</strong> paraphrasing to provide an interactive, modern UI for text processing.
 </p>
 
 <p>
